@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  node:
+    image: "beli/ldap"
+    container_name: "ldap"
+    environment:
+      - CONF_ROOTPW=passw0rd
+      - CONF_BASEDN=dc=example,dc=com
+    volumes:
+      - ./config=/config
+      - ./data=/data
+#   entrypoint: ""
+#   command: "/bin/sh /Selenium_Execution/runtest.sh"
+#   command: /bin/sh -c "while true; do echo hello world; sleep 999; done"
+#   working_dir: "/app"
+    ports:
+      - "3389:389"
