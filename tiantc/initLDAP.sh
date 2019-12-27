@@ -111,6 +111,9 @@ olcRootDN: cn=admin,dc=example,dc=com
 replace: olcAccess
 olcAccess: to *
   by * write
+-
+replace: olcSizeLimit
+olcSizeLimit: 5000
 HERE
 
 runLDAP ./${initIdif}.idif
