@@ -33,18 +33,12 @@ arg1="${1:-}"
 # Surround your variables with {}. Otherwise bash will try to access the $ENVIRONMENT_app variable in /srv/$ENVIRONMENT_app, whereas you probably intended /srv/${ENVIRONMENT}_app.
 echo arg1: ${arg1} __dir: ${__dir} __file: ${__file} __base: ${__base} __root: ${__root}
 
-
-# to start docker container:
-#   docker run -p 3389:389 -v `pwd`/config:/config `pwd`/data:/data -e CONF_ROOTPW=passw0rd -e CONF_BASEDN=dc=example,dc=com beli/ldap
-# OR
-#   docker-compose down && docker-compose up -d
-
 #
 # execute some operation in given idif
 # @param 1: the idif file
 #
 function runLDAP {
-  ldapmodify ${2:-} -x -D "cn=admin,cn=config" -w passw0rd -f "${1}"
+  ldapmodify -H ldap://localhost:3389 ${2:-} -x -D "cn=admin,cn=config" -w passw0rd -f "${1}"
 }
 
 #

@@ -29,3 +29,6 @@ Next step is [sona-tar/go-ldapc - Demo](https://github.com/sona-tar/go-ldapc).
 
 ## Reference
 - [sona-tar/go-ldapc](https://github.com/sona-tar/go-ldapc)
+
+
+## To start/init an usable LDAP Server, pls rever to tiantc
