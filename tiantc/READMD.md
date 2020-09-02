@@ -32,3 +32,14 @@ OR
 cd docker-ldapc/tiantc
 ./initLDAP.sh
 ```
+
+## LDAP properties
+
++ URL: ldap://192.168.5.80:3389
++ Search baseDN for user: ou=people,dc=example,dc=com
++ Search baseDN for contact: ou=contact,dc=example,dc=com
++ Email field: mail
++ Bind DN: cn=admin,cn=config
++ Bind Credential: passw0rd
+
+
