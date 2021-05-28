@@ -84,6 +84,7 @@ function addIfNotExist {
     echo "addIfNotExist succeed"
   else
     echo "addIfNotExist failed, will exit 1"
+    cat "${1}"
     exit 1;
   fi
 }
@@ -129,115 +130,371 @@ addIfNotExist ./${domainIdif}.idif
 echo "domain created successfully"
 
 
-# create organizationalUnit in LDAP
-orgIdif="newOrg"
-cat > ./${orgIdif}.idif <<HERE
-dn: ou=people,dc=example,dc=com
-ou: people
+## create organizationalUnit in LDAP
+#orgIdif="newOrg"
+#cat > ./${orgIdif}.idif <<HERE
+#dn: ou=people,dc=example,dc=com
+#ou: people
+#objectClass: organizationalUnit
+#objectclass: top
+#HERE
+## objectclass: domain
+#
+#addIfNotExist ./${orgIdif}.idif
+#echo "organizationUnit created successfully"
+#
+#
+## create type 0 user in LDAP
+#idifFileName="ChenTian"
+#cat > ./${idifFileName}.idif <<HERE
+#dn: cn=Chen_Tian,ou=people,dc=example,dc=com
+#cn: Chen_Tian
+#description: user des
+#telephoneNumber: 17723010088
+#objectClass: person
+#sn: Tian
+#HERE
+## objectclass: domain
+#
+#addIfNotExist ./${idifFileName}.idif
+#echo "User chen tian created successfully"
+#
+#
+## create normal user in LDAP
+#
+#templateName="testPeopleTemplate"
+#idifFileName="${templateName}"
+#cat > ./${idifFileName}.idif <<"HERE"
+#dn: cn=test_people${i},ou=people,dc=example,dc=com
+#cn: test_people${i}
+#objectClass: inetOrgPerson
+#sn: people${i}
+#displayName: test_people${i}
+#title: title${i}
+#mail: test_people${i}@example.com
+#userPassword: passw0rd
+#HERE
+#
+#for i in {0..10}
+#do
+#  echo "about to create test_people$i"
+#  # first copy a new file from template file
+#  cp -fRpv ./${templateName}.idif ./testuser.idif
+#  # replace with place-holder
+#  sed -i 's/${i}'"/${i}/g" ./testuser.idif
+## cat ./testuser.idif
+#  addIfNotExist ./testuser.idif
+#  echo "User test_people${i} created successfully"
+#done
+## objectclass: domain
+#
+#echo "about add test_contacts"
+#
+## create organizationalUnit in LDAP
+#orgIdif="newOrg"
+#cat > ./${orgIdif}.idif <<HERE
+#dn: ou=contact,dc=example,dc=com
+#ou: contact
+#objectClass: organizationalUnit
+#objectclass: top
+#HERE
+#
+#addIfNotExist ./${orgIdif}.idif
+#echo "organizationUnit created successfully"
+#
+#
+## create type 0 user in LDAP
+#idifFileName="ChenTian"
+#cat > ./${idifFileName}.idif <<HERE
+#dn: cn=Chen_Tian,ou=contact,dc=example,dc=com
+#cn: Chen_Tian
+#telephoneNumber: 17723010099
+#objectClass: person
+#sn: Tian
+#HERE
+## objectclass: domain
+#
+#addIfNotExist ./${idifFileName}.idif
+#echo "User chen tian created successfully"
+#
+#
+#templateName="testContactTemplate"
+#idifFileName="${templateName}"
+#cat > ./${idifFileName}.idif <<"HERE"
+#dn: cn=test_contact${i},ou=contact,dc=example,dc=com
+#cn: test_contact${i}
+#objectClass: inetOrgPerson
+#sn: contact${i}
+#title: title${i}
+#displayName: contactuser${i}
+#mail: test_contact${i}@example.com
+#userPassword: passw0rd
+#HERE
+#
+#for i in {0..10}
+#do
+#  echo "about to create test_contact$i"
+#  # first copy a new file from template file
+#  cp -fRpv ./${templateName}.idif ./contactuser.idif
+#  # replace with place-holder
+#  sed -i 's/${i}'"/${i}/g" ./contactuser.idif
+## cat ./contactuser.idif
+#  addIfNotExist ./contactuser.idif
+#  echo "User contactuser${i} created successfully"
+#done
+
+# create group in LDAP
+grpIdif="newGroup"
+cat > ./${grpIdif}.idif <<HERE
+dn: ou=groups,dc=example,dc=com
+ou: groups
 objectClass: organizationalUnit
 objectclass: top
-HERE
-# objectclass: domain
 
-addIfNotExist ./${orgIdif}.idif
-echo "organizationUnit created successfully"
-
-
-# create type 0 user in LDAP
-idifFileName="ChenTian"
-cat > ./${idifFileName}.idif <<HERE
-dn: cn=Chen Tian,ou=people,dc=example,dc=com
-cn: Chen Tian
-description: user des
-telephoneNumber: 17723010088
-objectClass: person
-sn: Tian
-HERE
-# objectclass: domain
-
-addIfNotExist ./${idifFileName}.idif
-echo "User chen tian created successfully"
-
-
-# create normal user in LDAP
-
-templateName="testuserTemplate"
-idifFileName="${templateName}"
-cat > ./${idifFileName}.idif <<"HERE"
-dn: cn=test user${i},ou=people,dc=example,dc=com
-cn: test user${i}
-objectClass: inetOrgPerson
-sn: user${i}
-displayName: testuser${i}
-title: title${i}
-mail: testuser${i}@example.com
-userPassword: passw0rd
-HERE
-
-for i in {0..1100}
-do
-  echo "about to create testuser$i"
-  # first copy a new file from template file
-  cp -fRpv ./${templateName}.idif ./testuser.idif
-  # replace with place-holder
-  sed -i 's/${i}'"/${i}/g" ./testuser.idif
-# cat ./testuser.idif
-  addIfNotExist ./testuser.idif
-  echo "User testuser${i} created successfully"
-done
-# objectclass: domain
-
-echo "about add Contacts"
-
-# create organizationalUnit in LDAP
-orgIdif="newOrg"
-cat > ./${orgIdif}.idif <<HERE
-dn: ou=contact,dc=example,dc=com
-ou: contact
+dn: ou=users,dc=example,dc=com
+ou: users
 objectClass: organizationalUnit
 objectclass: top
-HERE
 
-addIfNotExist ./${orgIdif}.idif
-echo "organizationUnit created successfully"
+dn: ou=it,ou=users,dc=example,dc=com
+ou: it
+objectClass: organizationalUnit
+objectclass: top
 
+dn: ou=adm,ou=users,dc=example,dc=com
+ou: adm
+objectClass: organizationalUnit
+objectclass: top
 
-# create type 0 user in LDAP
-idifFileName="ChenTian"
-cat > ./${idifFileName}.idif <<HERE
-dn: cn=Chen Tian,ou=contact,dc=example,dc=com
-cn: Chen Tian
-telephoneNumber: 17723010099
-objectClass: person
-sn: Tian
+dn: cn=admgrp,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+cn: admgrp
+uniqueMember: uid=admin5,ou=adm,ou=users,dc=example,dc=com
+
+dn: uid=admin5,ou=adm,ou=users,dc=example,dc=com
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: admin5
+sn: admin5
+uid: admin5
+uidNumber: 90005
+gidNumber: 100
+homeDirectory: /home/admin5
+loginShell: /bin/bash
+gecos: admin5
+userPassword: passw0rd
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+
+dn: cn=aigrp,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+cn: aigrp
+uniqueMember: uid=ai0,ou=ai,ou=users,dc=example,dc=com
+
+dn: ou=ai,ou=users,dc=example,dc=com
+ou: ai
+objectClass: organizationalUnit
+objectclass: top
+
+dn: uid=ai,ou=ai,ou=users,dc=example,dc=com
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: ai
+sn: ai
+uid: ai
+uidNumber: 80000
+gidNumber: 100
+homeDirectory: /home/ai
+loginShell: /bin/bash
+gecos: ai
+userPassword: passw0rd
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
 HERE
 # objectclass: domain
 
-addIfNotExist ./${idifFileName}.idif
-echo "User chen tian created successfully"
+addIfNotExist ./${grpIdif}.idif
+echo "group created successfully"
 
 
-templateName="contactuserTemplate"
-idifFileName="${templateName}"
-cat > ./${idifFileName}.idif <<"HERE"
-dn: cn=contact user${i},ou=contact,dc=example,dc=com
-cn: contact user${i}
-objectClass: inetOrgPerson
-sn: user${i}
-title: title${i}
-displayName: contactuser${i}
-mail: contactuser${i}@example.com
-userPassword: passw0rd
-HERE
-
-for i in {0..400}
-do
-  echo "about to create contactuser$i"
-  # first copy a new file from template file
-  cp -fRpv ./${templateName}.idif ./contactuser.idif
-  # replace with place-holder
-  sed -i 's/${i}'"/${i}/g" ./contactuser.idif
-# cat ./contactuser.idif
-  addIfNotExist ./contactuser.idif
-  echo "User contactuser${i} created successfully"
-done
+# create group2 in LDAP
+#grpIdif="newGroup"
+#cat > ./${grpIdif}.idif <<HERE
+#dn: cn=dbagrp,ou=groups,dc=example,dc=com
+#objectClass: top
+#objectClass: posixGroup
+#gidNumber: 900
+#
+#dn: cn=hrgrp,ou=groups,dc=example,dc=com
+#objectclass: groupOfNames
+#cn: hrgrp
+#member: cn=test_user5,ou=people,dc=example,dc=com
+#member: cn=test_user6,ou=people,dc=example,dc=com
+#member: cn=test_user7,ou=people,dc=example,dc=com
+#member: cn=test_user8,ou=people,dc=example,dc=com
+#
+#dn: uid=admin0,ou=users,dc=example,dc=com
+#objectClass: top
+#objectClass: posixAccount
+#objectClass: shadowAccount
+#objectClass: inetOrgPerson
+#cn: admin0
+#sn: adminUser0
+#uid: admin0
+#uidNumber: 90000
+#gidNumber: 100
+#homeDirectory: /home/admin0
+#loginShell: /bin/bash
+#gecos: admin0
+#userPassword: passw0rd
+#shadowLastChange: 0
+#shadowMax: 0
+#shadowWarning: 0
+#
+#dn: uid=admin1,ou=users,dc=example,dc=com
+#objectClass: top
+#objectClass: account
+#objectClass: posixAccount
+#objectClass: shadowAccount
+#cn: admin1
+#uid: admin1
+#uidNumber: 90001
+#gidNumber: 900
+#homeDirectory: /home/admin1
+#loginShell: /bin/bash
+#gecos: admin1
+#userPassword: passw0rd
+#shadowLastChange: 0
+#shadowMax: 0
+#shadowWarning: 0
+#
+#dn: uid=admin2,ou=users,dc=example,dc=com
+#objectClass: top
+#objectClass: posixAccount
+#objectClass: shadowAccount
+#objectClass: inetOrgPerson
+#cn: admin2
+#sn: adminUser2
+#uid: admin2
+#uidNumber: 90002
+#gidNumber: 100
+#homeDirectory: /home/admin2
+#loginShell: /bin/bash
+#gecos: admin2
+#userPassword: passw0rd
+#shadowLastChange: 0
+#shadowMax: 0
+#shadowWarning: 0
+#
+#dn: cn=dbagrp,ou=groups,dc=example,dc=com
+#changetype: modify
+#add: memberuid
+#memberuid: admin0
+#
+#dn: cn=dbagrp,ou=groups,dc=example,dc=com
+#changetype: modify
+#add: memberuid
+#memberuid: admin2
+#
+#dn: cn=dbagrp,ou=groups,dc=example,dc=com
+#changetype: modify
+#add: memberuid
+#memberuid: admin1
+#HERE
+## objectclass: domain
+#
+#addIfNotExist ./${grpIdif}.idif
+#echo "group 2 created successfully"
+#
+#
+#
+## create user in Users of LDAP
+#
+#echo "about add IT users"
+#
+#templateName="usersTemplate"
+#idifFileName="${templateName}"
+#cat > ./${idifFileName}.idif <<"HERE"
+#dn: cn=it_user${i},ou=it,ou=users,dc=example,dc=com
+#cn: it_user${i}
+#sn: iuser${i}
+#displayName: it_user${i}
+#title: title${i}
+#mail: it_user${i}@example.com
+#objectClass: top
+#objectClass: inetOrgPerson
+#objectClass: posixAccount
+#objectClass: shadowAccount
+#uid: it_user${i}
+#uidNumber: 1${i}
+#gidNumber: 100
+#homeDirectory: /home/it_user${i}
+#loginShell: /bin/bash
+#gecos: it_user${i}
+#userPassword: passw0rd
+#shadowLastChange: 0
+#shadowMax: 0
+#shadowWarning: 0
+#HERE
+#
+#for i in {0..10}
+#do
+#  echo "about to create it_user$i"
+#  # first copy a new file from template file
+#  cp -fRpv ./${templateName}.idif ./testuser.idif
+#  # replace with place-holder
+#  sed -i 's/${i}'"/${i}/g" ./testuser.idif
+#  addIfNotExist ./testuser.idif
+#  echo "User it_user${i} created successfully"
+#done
+## objectclass: domain
+#
+#echo "about add hr users"
+#
+#orgIdif="newOrg"
+#cat > ./${orgIdif}.idif <<HERE
+#dn: ou=hr,ou=users,dc=example,dc=com
+#ou: hr
+#objectClass: organizationalUnit
+#objectclass: top
+#HERE
+#
+#
+#addIfNotExist ./${orgIdif}.idif
+#echo "organizationUnit created successfully"
+#
+#echo "about add hr users"
+#
+#templateName="usersTemplate"
+#idifFileName="${templateName}"
+#cat > ./${idifFileName}.idif <<"HERE"
+#dn: cn=hr_user${i},ou=hr,ou=users,dc=example,dc=com
+#cn: hr_user${i}
+#objectClass: inetOrgPerson
+#sn: huser${i}
+#displayName: hr_user${i}
+#title: title${i}
+#mail: hr_user${i}@example.com
+#userPassword: passw0rd
+#HERE
+#
+#for i in {0..10}
+#do
+#  echo "about to create hr_user$i"
+#  # first copy a new file from template file
+#  cp -fRpv ./${templateName}.idif ./testuser.idif
+#  # replace with place-holder
+#  sed -i 's/${i}'"/${i}/g" ./testuser.idif
+#  addIfNotExist ./testuser.idif
+#  echo "User hr_user${i} created successfully"
+#done
+## objectclass: domain
+#
+#echo "done with add hr users"
+#
