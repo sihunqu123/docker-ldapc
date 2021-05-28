@@ -8,8 +8,8 @@ services:
       - CONF_ROOTPW=passw0rd
       - CONF_BASEDN=dc=example,dc=com
     volumes:
-      - ./config=/config
-      - ./data=/data
+      - ./config:/config
+      - ./data:/data
 #   entrypoint: ""
 #   command: "/bin/sh /Selenium_Execution/runtest.sh"
 #   command: /bin/sh -c "while true; do echo hello world; sleep 999; done"
